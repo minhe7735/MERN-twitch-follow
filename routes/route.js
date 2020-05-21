@@ -8,8 +8,8 @@ const saltRounds = 10;
 
 module.exports = async (app, client) => {
     try {
-        //const db = (await client).db("twitch");
-        const collection = await client.db("twitch").collection("users");
+        const db = await client.db("twitch");
+        const collection = await db.collection("users");
         const validUserNameAndPassWordRegEx = /[^A-Za-z0-9!@#$]/g;
         app.post(
             "/register",
