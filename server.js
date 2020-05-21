@@ -1,5 +1,5 @@
 const MongoClient = require("mongodb");
-const flash = require("express-flash");
+//const flash = require("express-flash");
 const express = require("express");
 const helmet = require("helmet");
 const session = require("express-session");
@@ -26,7 +26,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
+//app.use(flash());
 
 app.get("/", apiRoutes);
 
