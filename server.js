@@ -1,4 +1,4 @@
-const MongoClient = require("mongodb");
+const MongoClient = require("mongodb").MongoClient;
 //const flash = require("express-flash");
 const express = require("express");
 const helmet = require("helmet");
