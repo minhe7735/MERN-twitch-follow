@@ -6,10 +6,8 @@ const fetch = require("node-fetch");
 
 const saltRounds = 10;
 
-module.exports = async (app, client) => {
+module.exports = async (app, collection) => {
     try {
-        const db = await client.db("twitch");
-        const collection = await db.collection("users");
         const validUserNameAndPassWordRegEx = /[^A-Za-z0-9!@#$]/g;
         app.post(
             "/register",

@@ -26,30 +26,34 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-//app.use(flash());
 
 app.get("/", apiRoutes);
+app.get("/userprofile", (req, res) => {
+    console.log("here");
+});
 
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
 }
 
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname + "./client", "build", "index.html"));
-});
+// app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname + "/client", "build", "index.html"));
+// });
 
 const port = process.env.PORT || 5000;
 MongoClient.connect(
     CONNECTION_STRING,
     { useUnifiedTopology: true },
-    (err, client) => {
+    async (err, client) => {
         if (err) {
             console.log("Database error: " + err);
         } else {
+            const db = client.db("twitch");
+            const collection = db.collection("users");
             app.listen(port, () => {
                 console.log("Listening on port " + process.env.PORT);
-                authenticate(app, client);
-                apiRoutes(app, client);
+                authenticate(app, collection);
+                apiRoutes(app, collection);
             });
         }
     }
