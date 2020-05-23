@@ -18,6 +18,7 @@ function UserProfile() {
     useEffect(() => {
         dispatch(getFollows());
     }, [dispatch]);
+
     return (
         <div className="flex flex-col justify-center items-center w-full mt-2">
             <form

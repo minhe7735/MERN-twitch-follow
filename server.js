@@ -25,6 +25,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+let collection;
 MongoClient.connect(
     CONNECTION_STRING,
     { useUnifiedTopology: true },
@@ -33,25 +34,26 @@ MongoClient.connect(
             console.log("Database error: " + err);
         } else {
             const db = client.db("twitch");
-            const collection = db.collection("users");
+            collection = db.collection("users");
             authenticate(collection);
-            app.use(
-                "/api",
-                (req, res, next) => {
-                    req.dbCollection = collection;
-                    next();
-                },
-                apiRoutes
-            );
         }
     }
 );
 
+app.use(
+    "/api",
+    (req, res, next) => {
+        req.dbCollection = collection;
+        next();
+    },
+    apiRoutes
+);
+
 app.use(express.static(path.join(__dirname, "client", "build")));
 
-// app.get("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-// });
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "/client/build/index.html"));
+});
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

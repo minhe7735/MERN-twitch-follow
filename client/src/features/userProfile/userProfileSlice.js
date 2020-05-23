@@ -22,7 +22,7 @@ export const { loadUserProfile, loadMessage } = userProfileSlice.actions;
 
 export const addFollows = (newFollow) => async (dispatch) => {
     try {
-        let response = await fetch("/api/Follows", {
+        let response = await fetch("/api/userProfile", {
             method: "PUT",
             body: JSON.stringify({ toAdd: newFollow }),
             headers: { "Content-Type": "application/json" },
@@ -41,7 +41,7 @@ export const addFollows = (newFollow) => async (dispatch) => {
 
 export const removeFollows = (followToRemove) => async (dispatch) => {
     try {
-        let response = await fetch("/api/Follows", {
+        let response = await fetch("/api/userProfile", {
             method: "DELETE",
             body: JSON.stringify({ toRemove: followToRemove }),
             headers: { "Content-Type": "application/json" },
@@ -55,7 +55,7 @@ export const removeFollows = (followToRemove) => async (dispatch) => {
 
 export const getFollows = () => async (dispatch) => {
     try {
-        let response = await fetch(`/api/Follows`);
+        let response = await fetch("/api/userProfile");
         let follows = await response.json();
         let offline = {};
         let online = {};

@@ -70,7 +70,6 @@ router.post("/register", ensureNotAuthenticated, async (req, res, next) => {
 });
 router.post("/login", ensureNotAuthenticated, (req, res, next) => {
     const collection = req.dbCollection;
-
     passport.authenticate("local", function (err, user, info) {
         if (err) return next(err);
         if (info) return res.json(info);
@@ -86,8 +85,8 @@ router.get("/logout", (req, res) => {
     return res.json({ success: req.isAuthenticated() });
 });
 router
-    .route("/Follows")
-    .get((req, res) => {
+    .route("/userProfile")
+    .get(async (req, res) => {
         const collection = req.dbCollection;
         collection.findOne(
             { username: req.user.username },

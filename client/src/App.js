@@ -21,7 +21,7 @@ function App() {
                     exact
                     path="/login"
                     render={() =>
-                        loggedIn ? <Redirect to={"/userprofile"} /> : <Login />
+                        loggedIn ? <Redirect to={"/userProfile"} /> : <Login />
                     }
                 />
                 <Route
@@ -29,7 +29,7 @@ function App() {
                     path="/register"
                     render={() =>
                         loggedIn ? (
-                            <Redirect to={"/userprofile"} />
+                            <Redirect to={"/userProfile"} />
                         ) : (
                             <Register />
                         )
@@ -37,7 +37,7 @@ function App() {
                 />
                 <Route
                     exact
-                    path="/userprofile"
+                    path="/userProfile"
                     render={() =>
                         !loggedIn ? <Redirect to={"/login"} /> : <UserProfile />
                     }

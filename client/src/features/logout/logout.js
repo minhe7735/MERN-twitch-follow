@@ -9,6 +9,7 @@ function Logout() {
         () => async () => {
             try {
                 let response = await fetch("/api/logout", {
+                    method: "GET",
                     credentials: "include",
                 });
                 let message = await response.json();
