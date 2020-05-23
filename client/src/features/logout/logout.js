@@ -8,7 +8,7 @@ function Logout() {
     useEffect(
         () => async () => {
             try {
-                let response = await fetch("/logout", {
+                let response = await fetch("/api/logout", {
                     credentials: "include",
                 });
                 let message = await response.json();

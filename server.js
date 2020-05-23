@@ -1,5 +1,4 @@
 const MongoClient = require("mongodb").MongoClient;
-//const flash = require("express-flash");
 const express = require("express");
 const helmet = require("helmet");
 const session = require("express-session");
@@ -26,35 +25,40 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+MongoClient.connect(
+    CONNECTION_STRING,
+    { useUnifiedTopology: true },
+    (err, client) => {
+        if (err) {
+            console.log("Database error: " + err);
+        } else {
+            const db = client.db("twitch");
+            const collection = db.collection("users");
+            authenticate(collection);
+            app.use(
+                "/api",
+                (req, res, next) => {
+                    req.dbCollection = collection;
+                    next();
+                },
+                apiRoutes
+            );
+        }
+    }
+);
+// app.use("/", apiRoutes);
 
-app.get("/", apiRoutes);
-app.get("/userprofile", (req, res) => {
-    console.log("here");
-});
-
-if (process.env.NODE_ENV === "production") {
-    app.use(express.static("client/build"));
-}
+// if (process.env.NODE_ENV === "production") {
+//     app.use(express.static("client/build"));
+// }
 
 // app.get("*", (req, res) => {
 //     res.sendFile(path.join(__dirname + "/client", "build", "index.html"));
 // });
 
 const port = process.env.PORT || 5000;
-MongoClient.connect(
-    CONNECTION_STRING,
-    { useUnifiedTopology: true },
-    async (err, client) => {
-        if (err) {
-            console.log("Database error: " + err);
-        } else {
-            const db = client.db("twitch");
-            const collection = db.collection("users");
-            app.listen(port, () => {
-                console.log("Listening on port " + process.env.PORT);
-                authenticate(app, collection);
-                apiRoutes(app, collection);
-            });
-        }
-    }
-);
+app.listen(port, () => {
+    console.log("Listening on port " + port);
+});
+
+module.exports = app;

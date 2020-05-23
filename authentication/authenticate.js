@@ -3,7 +3,7 @@ const ObjectID = require("mongodb").ObjectID;
 const LocalStrategy = require("passport-local");
 const bcrypt = require("bcrypt");
 
-module.exports = async (app, collection) => {
+module.exports = async (collection) => {
     passport.serializeUser((user, done) => {
         done(null, user._id);
     });
@@ -15,6 +15,7 @@ module.exports = async (app, collection) => {
     });
     passport.use(
         //user and password authentication
+
         new LocalStrategy(function (username, password, done) {
             collection.findOne({ username: username }, (err, user) => {
                 console.log("User " + username + " attempted to log in.");

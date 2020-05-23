@@ -16,7 +16,7 @@ export const { updateDescription } = loginSlice.actions;
 
 export const errAsync = (data) => async (dispatch) => {
     try {
-        let response = await fetch("/login", {
+        let response = await fetch("/api/login", {
             method: "POST",
             body: JSON.stringify({ username: data[0], password: data[1] }),
             headers: { "Content-Type": "application/json" },

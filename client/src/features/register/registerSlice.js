@@ -16,7 +16,7 @@ export const { updateDescription } = registerSlice.actions;
 
 export const errAsync = (data) => async (dispatch) => {
     try {
-        let response = await fetch("/register", {
+        let response = await fetch("/api/register", {
             method: "POST",
             body: JSON.stringify({ username: data[0], password: data[1] }),
             headers: { "Content-Type": "application/json" },
