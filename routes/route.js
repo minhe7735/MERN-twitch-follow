@@ -45,6 +45,7 @@ router.post("/register", ensureNotAuthenticated, async (req, res, next) => {
                 message: "password must be longer than 1 character",
             });
         }
+        req.session.cookie.expires = false;
         const collection = req.dbCollection;
         const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
         const addNewUser = await collection.findOneAndUpdate(
@@ -69,6 +70,7 @@ router.post("/register", ensureNotAuthenticated, async (req, res, next) => {
     }
 });
 router.post("/login", ensureNotAuthenticated, (req, res, next) => {
+    req.session.cookie.expires = false;
     const collection = req.dbCollection;
     passport.authenticate("local", function (err, user, info) {
         if (err) return next(err);
