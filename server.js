@@ -49,16 +49,18 @@ app.use(
     apiRoutes
 );
 
-if (process.env.NODE_ENV === "poduction") {
+if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "client", "build")));
 
     app.get("*", (req, res) => {
+        req.session.cookie.expires = false;
         res.sendFile(path.join(__dirname, "/client/build/index.html"));
     });
 } else {
     app.use(express.static(path.join(__dirname, "client", "public")));
 
     app.get("*", (req, res) => {
+        req.session.cookie.expires = false;
         res.sendFile(path.join(__dirname, "/client/public/index.html"));
     });
 }
