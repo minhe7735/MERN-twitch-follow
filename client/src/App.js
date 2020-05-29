@@ -12,6 +12,7 @@ import { Route, Redirect, Switch } from "react-router-dom";
 
 function App() {
     const loggedIn = useSelector(selectStatus);
+    if (!loggedIn) fetch("/api/logout");
     return (
         <div className="App max-w-full">
             <Navbar />
