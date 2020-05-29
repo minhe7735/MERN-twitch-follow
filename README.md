@@ -1,5 +1,5 @@
 # twitch-follow
-
+Deployed:https://mertwitchfollow.herokuapp.com/
 
 # Install dependencies for server
 npm install
